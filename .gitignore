@@ -144,3 +144,8 @@ dmypy.json
 .pyre/
 
 
+yolov5
+
+DATN_data
+
+DATN_notebook/wandb

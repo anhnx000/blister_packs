@@ -5,6 +5,11 @@ import torchvision.transforms as transforms
 import torchvision.models as models
 from PIL import Image
 from PATH import *
+from sklearn.metrics.pairwise import cosine_similarity
+
+
+
+
 class Word_embedding:
    
     def __init__(self):
@@ -172,6 +177,5 @@ if __name__ == '__main__':
     print(vec_img_2.shape)
     print(vec_img_3.shape)
 
-    from sklearn.metrics.pairwise import cosine_similarity
     print("cat vs cat2:", cosine_similarity(vec_img_1.reshape((1, -1)), vec_img_2.reshape((1, -1)))[0][0])
     print("cat vs catdog:", cosine_similarity(vec_img_1.reshape((1, -1)), vec_img_3.reshape((1, -1)))[0][0])
