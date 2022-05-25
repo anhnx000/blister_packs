@@ -6,7 +6,7 @@ import torchvision.models as models
 from PIL import Image
 from PATH import *
 from sklearn.metrics.pairwise import cosine_similarity
-
+import numpy as np
 
 
 
@@ -161,6 +161,21 @@ class Image_embedding():
 
     def get_layer_output_size(self):
         return self.layer_output_size
+
+    def get_cosine_similarity(self, vec1, vec2):
+        """
+        Get cosine similarity between two vectors
+        :param vec1: Numpy array or Path to image
+        :param vec2: Numpy array or Path to image
+        :return: Float
+        """
+        if (type(vec1) == np.ndarray) and (type(vec2) == np.ndarray):
+            return cosine_similarity(vec1.reshape((1, -1)), vec2.reshape((1, -1)))[0][0]
+        if (type(vec1) == Image.Image) and (type(vec2) == Image.Image):
+            img_1 = Image.open(path_image_1).convert('RGB')
+            img_2 = Image.open(path_image_2).convert('RGB')
+            return self.get_cosine_similarity(self.get_vec(img_1), self.get_vec(img_2))
+        return Exception('Invalid input type must be numpy array or path to image')
     
 if __name__ == '__main__':
     img2vec = Image_embedding(model='resnet18')
@@ -172,10 +187,5 @@ if __name__ == '__main__':
     img_3 = Image.open(path_image_3).convert('RGB')
     vec_img_1 = img2vec.get_vec(img_1)
     vec_img_2 = img2vec.get_vec(img_2)
-    vec_img_3 = img2vec.get_vec(img_3)
-    print(vec_img_1.shape)
-    print(vec_img_2.shape)
-    print(vec_img_3.shape)
-
-    print("cat vs cat2:", cosine_similarity(vec_img_1.reshape((1, -1)), vec_img_2.reshape((1, -1)))[0][0])
-    print("cat vs catdog:", cosine_similarity(vec_img_1.reshape((1, -1)), vec_img_3.reshape((1, -1)))[0][0])
+    # vec_img_3 = img2vec.get_vec(img_3)
+    print("cat vs cat2:", img2vec.get_cosine_similarity(img_1,img_2))
