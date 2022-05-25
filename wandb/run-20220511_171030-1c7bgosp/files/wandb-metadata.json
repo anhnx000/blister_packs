@@ -1,0 +1,23 @@
+{
+    "os": "Linux-5.4.0-109-generic-x86_64-with-glibc2.27",
+    "python": "3.9.12",
+    "heartbeatAt": "2022-05-11T10:10:34.040360",
+    "startedAt": "2022-05-11T10:10:30.369926",
+    "docker": null,
+    "gpu": "NVIDIA GeForce RTX 3080",
+    "gpu_count": 4,
+    "cpu_count": 48,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "<python with no main file>",
+    "git": {
+        "remote": "https://github.com/Xuan-Anh/blister_packs.git",
+        "commit": "b0540a1c449147767f3d483f67184bceb9f39063"
+    },
+    "email": "phucnguyenphi2810@gmail.com",
+    "root": "/mnt/disk1/doan/xanh/server_blister_packs",
+    "host": "aiotlab",
+    "username": "doan",
+    "executable": "/mnt/disk1/doan/.conda/envs/blister_packs/bin/python"
+}

@@ -1,0 +1,1 @@
+python3  ../yolov5/detect.py --weights ../yolov5/runs/train/exp24/weights/last.pt  --source ../DATN_data/robo_sorted/v0_v10_yolo_crop/DATA_CHUP_yolo/images --save-txt  --device 0

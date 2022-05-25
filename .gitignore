@@ -1,3 +1,19 @@
+
+yolov5
+
+DATN_data
+
+data
+
+
+datasets
+
+wandb
+
+A_REPOSITORY
+
+./A_REPOSITORY
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -127,3 +143,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
