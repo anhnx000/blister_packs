@@ -5,10 +5,9 @@ DATN_data
 
 data
 
+datasets/*
 
-datasets
-
-wandb
+wandb/*
 
 A_REPOSITORY
 
