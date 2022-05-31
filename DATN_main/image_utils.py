@@ -8,6 +8,7 @@ from craft_text_detector import (
     )
 import copy
 from craft_text_detector.file_utils import crop_poly, rectify_poly
+from DATN_main.embedding_utils import Image_embedding
 from PATH import *
 import cv2
 import matplotlib.pyplot as plt
@@ -17,6 +18,8 @@ from vietocr.tool.predictor import Predictor
 from vietocr.tool.config import Cfg
 import matplotlib.pyplot as plt
 
+
+
 class Image_utils:
     def __init__(self):
         
@@ -24,7 +27,7 @@ class Image_utils:
         self.config['weights'] = WEIGHT_VIETOCR
         # config['weights'] = 'https://drive.google.com/uc?id=13327Y1tz1ohsm5YZMyXVMPIOjoOA0OaA'
         self.config['cnn']['pretrained']=False
-        self.config['device'] = 'cuda:0'
+        self.config['device'] = TO_CUDA
         self.config['predictor']['beamsearch']=False
         self.detector = Predictor(self.config)
 
@@ -75,23 +78,29 @@ class Image_utils:
         return img_crop_list
 
     def recognition_img(self,img):
+        img = self.rotate_90_degree(img)
         img = Image.fromarray(img)
         s = self.detector.predict(img)
         return s
 
     def recognition_180_degree(self,img):
+        img = copy.deepcopy(img)
+        img = self.rotate_90_degree(img)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        
         # img_np = cv2.rotate(img, cv2.cv2.ROTATE_90_CLOCKWISE)
-        s= self.recognition_img(img)
-        # print(s)
+        s = self.recognition_img(img)
+
+
         img_180 = cv2.rotate(img, cv2.ROTATE_180)
         s_180 = self.recognition_img(img_180)
         # print(s)
         return [s, s_180]
 
 
-    def rotate_90_degree(img):
+    def rotate_90_degree(self, img):
         img_shape = img.shape # (height, width, channel)
-        print("img_shape: ", img_shape)
+        # print("img_shape: ", img_shape)
         img_rotate = copy.deepcopy(img)
         if img_shape[0] > img_shape[1]:
             img_rotate = cv2.rotate(img_rotate, cv2.ROTATE_90_CLOCKWISE)
@@ -99,7 +108,7 @@ class Image_utils:
 
 
 
-    def plot(result_rgb):
+    def plot(self, result_rgb):
         # result_bgr = cv2.cvtColor(result_rgb, cv2.COLOR_RGB2BGR)
         # DO ẢNH MÀU BÌNH THƯỜNG LÀ RGB, KHI imread hoặc imwrite cv2 tự động đảo kênh màu 
         # lưu lại dưới dạng BGR 
@@ -109,13 +118,11 @@ class Image_utils:
             # lưu lại dưới dạng BGR 
 
 
-
-
 if __name__ == "__main__":
-        img = cv2.imread("../DATN_data/outputs/1_acefalgan__(13)/image_crops/crop_14.png")
+        img = cv2.imread("DATN_data/outputs/1_acefalgan__(13)/image_crops/crop_14.png")
+        image_utils = Image_utils()
         
-        # print(type(img))
-        # rotate_90_degree(img)
+        print(image_utils.recognition_180_degree(img))
 
 
 

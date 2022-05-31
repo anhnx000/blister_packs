@@ -149,3 +149,6 @@ yolov5
 DATN_data
 
 DATN_notebook/wandb
+DATN_notebook/datasets
+data_omi
+

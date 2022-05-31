@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=0 python3 DATN_main/model_non_concat.py

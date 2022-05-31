@@ -7,7 +7,8 @@ from PIL import Image
 from PATH import *
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-
+import cv2 
+import copy
 
 
 class Word_embedding:
@@ -162,6 +163,17 @@ class Image_embedding():
     def get_layer_output_size(self):
         return self.layer_output_size
 
+
+    def get_gray_image_embedding(self, img):
+        """ Get vector embedding from PIL image
+        """
+
+        if type(img) == Image.Image:
+            img = img.convert('L')
+            return self.get_vec(img)
+        return "Không phải Image type"
+
+
     def get_cosine_similarity(self, vec1, vec2):
         """
         Get cosine similarity between two vectors
@@ -179,12 +191,15 @@ class Image_embedding():
     
 if __name__ == '__main__':
     img2vec = Image_embedding(model='resnet18')
-    path_image_1 = "A_REPOSITORY/img2vec/example/test_images/cat.jpg"
-    path_image_2 = "A_REPOSITORY/img2vec/example/test_images/cat2.jpg"
+    path_image_1 = "DATN_data/outputs/1_acefalgan__(13)/image_crops/crop_14.png"
+    path_image_2 = "DATN_data/outputs/1_acefalgan__(13)/image_crops/crop_15.png"
     path_image_3 = "A_REPOSITORY/img2vec/example/test_images/catdog.jpg"
     img_1 = Image.open(path_image_1).convert('RGB')
     img_2 = Image.open(path_image_2).convert('RGB')
     img_3 = Image.open(path_image_3).convert('RGB')
+    # rotate 90 degree image_1
+    img_1 = img_1.rotate(90,  expand = True)
+
     vec_img_1 = img2vec.get_vec(img_1)
     vec_img_2 = img2vec.get_vec(img_2)
     # vec_img_3 = img2vec.get_vec(img_3)
